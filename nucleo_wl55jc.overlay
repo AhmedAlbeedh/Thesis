@@ -1,0 +1,23 @@
+/ {
+    aliases {
+        mcu-hold-pin = &mcu_hold;
+        rtc-i2c = &i2c2;
+        rtc0 = &my_rtc;
+    };
+    gpio_keys {
+        compatible = "gpio-keys";
+        mcu_hold: mcu_hold {
+            gpios = <&gpiob 5 GPIO_ACTIVE_HIGH>;
+            label = "MCU Power Hold Pin";
+        };
+    };
+};
+&i2c2 {
+    status = "okay";
+    my_rtc: rv8803@32 {
+        compatible = "microcrystal,rv8803";
+        reg = <0x32>;
+        int-gpios = <&gpioa 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        status = "okay";
+    };
+};
